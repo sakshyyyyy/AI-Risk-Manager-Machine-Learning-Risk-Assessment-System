@@ -221,14 +221,18 @@ Risk Factors:
 - High number of product views
 - Very short session
 Business Objective
+'''
+
+## Business Objective
 
 The system is designed as a prototype decision-support tool that can help e-commerce businesses:
 
-Identify potentially risky orders
-Prioritize orders for additional verification
-Reduce losses associated with product returns
-Provide interpretable risk signals to support operational decisions
-Disclaimer
+- Identify potentially risky orders
+- Prioritize orders for additional verification
+- Reduce losses associated with product returns
+- Provide interpretable risk signals to support operational decisions
+
+## Disclaimer
 
 This is a student-built prototype developed for the Razorpay AI Buildathon.
 
