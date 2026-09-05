@@ -8,55 +8,61 @@ E-commerce businesses face losses due to product returns and risky orders.
 
 This project uses machine learning to estimate the probability that an order will be returned and converts that probability into a risk score, risk level, and recommended action.
 
+```text
 ## System Architecture
 
-```mermaid
-flowchart TD
-
-    A["E-commerce Transaction Data"] --> B["Data Cleaning and Validation"]
-
-    B --> C["Exploratory Data Analysis"]
-
-    C --> D["Feature Engineering"]
-
-    D --> D1["Discounted Price"]
-    D --> D2["High Discount Indicator"]
-    D --> D3["Frequent Returner Indicator"]
-    D --> D4["Delayed Delivery Indicator"]
-
-    D1 --> E["Data Preprocessing"]
-    D2 --> E
-    D3 --> E
-    D4 --> E
-
-    E --> E1["Numerical Features"]
-    E --> E2["Categorical Features"]
-
-    E1 --> E3["Median Imputation and Standard Scaling"]
-    E2 --> E4["Most Frequent Imputation and One Hot Encoding"]
-
-    E3 --> F["Random Forest Classifier"]
-    E4 --> F
-
-    F --> G["Return Risk Probability"]
-
-    G --> H["Risk Assessment Engine"]
-
-    H --> H1["LOW"]
-    H --> H2["MEDIUM"]
-    H --> H3["HIGH"]
-
-    H1 --> I1["Allow Normally"]
-    H2 --> I2["Additional Verification"]
-    H3 --> I3["Manual Review"]
-
-    G --> J["Streamlit Risk Dashboard"]
-
-    J --> K["Risk Score"]
-    J --> L["Risk Factors"]
-    J --> M["Recommended Action"]
-
-    
+```text
+E-commerce Order Data
+        │
+        ▼
+Data Cleaning & Validation
+        │
+        ▼
+Exploratory Data Analysis
+        │
+        ▼
+Feature Engineering
+ ┌──────┼────────┬─────────────┐
+ ▼      ▼        ▼             ▼
+Discounted   High Discount   Frequent     Delayed
+Price        Indicator       Returner     Delivery
+ └──────┬────────┴─────────────┴─────────────┘
+        │
+        ▼
+Data Preprocessing
+        │
+   ┌────┴────┐
+   ▼         ▼
+Numerical   Categorical
+Features    Features
+   │         │
+   ▼         ▼
+Scaling    One-Hot Encoding
+   └────┬────┘
+        │
+        ▼
+Random Forest Classifier
+        │
+        ▼
+Return Risk Probability
+        │
+        ▼
+Risk Assessment Engine
+   ┌────┼─────┐
+   ▼    ▼     ▼
+ LOW  MEDIUM  HIGH
+   │    │      │
+   ▼    ▼      ▼
+Allow  Additional  Manual
+Normally Verification Review
+        │
+        ▼
+Streamlit Risk Dashboard
+        │
+        ├── Risk Score
+        ├── Risk Level
+        ├── Risk Factors
+        └── Recommended Action
 Features
 E-commerce return risk prediction
 Machine learning based probability score
