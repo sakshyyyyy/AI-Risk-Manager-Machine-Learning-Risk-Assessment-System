@@ -1,79 +1,237 @@
-# AI Risk Manager
+# AI Risk Manager — Machine Learning Risk Assessment System
 
 An AI-powered e-commerce return risk detection system developed for the Razorpay AI Buildathon.
 
 ## Problem Statement
 
 E-commerce businesses face losses due to product returns and risky orders.
-This project uses machine learning to estimate the probability that an order will be returned and assigns an appropriate risk level.
 
-## Features
+This project uses machine learning to estimate the probability that an order will be returned and converts that probability into a risk score, risk level, and recommended action.
 
-- E-commerce return risk prediction
-- Machine learning based probability score
-- LOW, MEDIUM and HIGH risk classification
-- Recommended action for each risk level
-- Explainable risk factors
-- Interactive Streamlit dashboard
-- Business cost based threshold analysis
+## System Architecture
 
-## Machine Learning
+```mermaid
+flowchart TD
 
-The project uses:
+    A[E-commerce Transaction Data] --> B[Data Cleaning & EDA]
 
-- Logistic Regression
-- Random Forest Classifier
+    B --> C[Feature Engineering]
+
+    C --> C1[Discounted Price]
+    C --> C2[High Discount Indicator]
+    C --> C3[Frequent Returner Indicator]
+    C --> C4[Delayed Delivery Indicator]
+
+    C --> D[Data Preprocessing]
+
+    D --> D1[Numerical Features]
+    D --> D2[Categorical Features]
+
+    D1 --> D3[Imputation + Standard Scaling]
+    D2 --> D4[Imputation + One-Hot Encoding]
+
+    D3 --> E[Model Training]
+    D4 --> E
+
+    E --> E1[Logistic Regression]
+    E --> E2[Random Forest]
+
+    E1 --> F[Model Evaluation]
+    E2 --> F
+
+    F --> F1[Precision]
+    F --> F2[Recall]
+    F --> F3[F1 Score]
+    F --> F4[Business Cost Analysis]
+
+    F --> G[Risk Prediction]
+
+    G --> H[Return Risk Probability]
+    H --> I[Risk Score]
+
+    I --> J{Risk Level}
+
+    J --> J1[LOW]
+    J --> J2[MEDIUM]
+    J --> J3[HIGH]
+
+    J1 --> K1[Allow Normally]
+    J2 --> K2[Additional Verification]
+    J3 --> K3[Manual Review]
+
+    G --> L[Explainable Risk Factors]
+
+    K1 --> M[Streamlit Dashboard]
+    K2 --> M
+    K3 --> M
+    L --> M
+Features
+E-commerce return risk prediction
+Machine learning based probability score
+LOW, MEDIUM and HIGH risk classification
+Recommended action for each risk level
+Explainable risk factors
+Interactive Streamlit dashboard
+Business cost based threshold analysis
+Machine Learning
+
+The project evaluates two machine learning models:
+
+Logistic Regression
+Random Forest Classifier
 
 Random Forest was selected as the final model based on its performance.
 
-### Evaluation
+Model Evaluation
 
-Final threshold: 0.30
+Final decision threshold: 0.30
 
-- Precision: 0.4777
-- Recall: 0.9791
-- F1 Score: 0.6421
+Metric	Score
+Precision	0.4777
+Recall	0.9791
+F1 Score	0.6421
 
 The threshold was selected using an illustrative business cost analysis where false negatives were assigned a higher cost than false positives.
 
-## Risk Levels
+Note: The cost assumptions and threshold are illustrative and do not represent official Razorpay policies.
 
-| Risk Probability | Risk Level | Recommended Action |
-|---|---|---|
-| < 30% | LOW | Allow Normally |
-| 30% - 59% | MEDIUM | Additional Verification |
-| >= 60% | HIGH | Manual Review |
+Risk Levels
+Risk Probability	Risk Level	Recommended Action
+< 30%	LOW	Allow Normally
+30% – 59%	MEDIUM	Additional Verification
+>= 60%	HIGH	Manual Review
+Risk Factors
 
-## Risk Factors
+The system provides simple explainability by identifying potential risk factors such as:
 
-The system identifies factors such as:
+High past return rate
+High delivery delay
+High discount
+High number of product views
+Very short session
 
+These factors are used to provide additional context alongside the model's predicted probability.
+
+Dataset
+
+The model was developed using an e-commerce transaction dataset containing 200,000 records and multiple customer, product, delivery and transaction attributes.
+
+Key input features include:
+
+Customer age
+Product price
+Discount percentage
+Product rating
+Past purchase count
+Past return rate
+Delivery delay
+Session length
+Number of product views
+Device type
+Product category
+Shipping method
+Payment method
+Coupon usage
+Feature Engineering
+
+The following additional features were created:
+
+discounted_price
+is_high_discount
+is_frequent_returner
+is_delayed_delivery
+
+These features help the model capture additional behavioural and transaction-level patterns.
+
+Risk Assessment Flow
+Order Details
+      |
+      v
+Feature Engineering
+      |
+      v
+Preprocessing
+      |
+      v
+Random Forest Model
+      |
+      v
+Return Risk Probability
+      |
+      v
+Risk Score
+      |
+      +------------------+
+      |                  |
+      v                  v
+ Risk Level        Risk Factors
+      |
+      +--------+---------+
+      |        |         |
+     LOW    MEDIUM      HIGH
+      |        |         |
+    Allow   Verify    Manual Review
+Technologies Used
+Python
+Pandas
+NumPy
+Scikit-learn
+Joblib
+Streamlit
+Project Structure
+AI-Risk-Manager-Machine-Learning-Risk-Assessment-System/
+│
+├── 01_eda.py
+├── predict.py
+├── app.py
+├── preprocessor.pkl
+├── requirements.txt
+├── README.md
+├── train.csv
+├── test.csv
+└── sample_submission.csv
+Model File
+
+risk_model.pkl is intentionally excluded from the GitHub repository because of GitHub's large file limitations.
+
+The trained model remains available locally for running the Streamlit application.
+
+The model can be regenerated by running:
+
+python 01_eda.py
+How to Run
+1. Install Dependencies
+pip install -r requirements.txt
+2. Generate / Train the Model
+python 01_eda.py
+3. Run the Prediction Script
+python predict.py
+4. Launch the Streamlit Dashboard
+streamlit run app.py
+Example Output
+========== AI RISK RESULT ==========
+
+Return Risk Probability: 57.00%
+Risk Score: 57.00%
+Risk Level: MEDIUM
+Recommended Action: Additional Verification
+
+Risk Factors:
 - High past return rate
 - High delivery delay
 - High discount
 - High number of product views
 - Very short session
+Business Objective
 
-## Technologies Used
+The system is designed as a prototype decision-support tool that can help e-commerce businesses:
 
-- Python
-- Pandas
-- NumPy
-- Scikit-learn
-- Streamlit
-- Joblib
+Identify potentially risky orders
+Prioritize orders for additional verification
+Reduce losses associated with product returns
+Provide interpretable risk signals to support operational decisions
+Disclaimer
 
-## Project Structure
+This is a student-built prototype developed for the Razorpay AI Buildathon.
 
-```text
-Razorpay_ai_risk_manager/
-│
-├── 01_eda.py
-├── predict.py
-├── app.py
-├── risk_model.pkl
-├── preprocessor.pkl
-├── requirements.txt
-├── README.md
-├── train.csv
-└── test.csv
+The business costs, risk thresholds and recommended actions used in this project are illustrative and are not official Razorpay policies.

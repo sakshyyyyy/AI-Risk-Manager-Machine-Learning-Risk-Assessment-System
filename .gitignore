@@ -1,0 +1,6 @@
+risk_model.pkl
+__pycache__/
+*.pyc
+.venv/
+.env
+.streamlit/secrets.toml
