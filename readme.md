@@ -13,58 +13,50 @@ This project uses machine learning to estimate the probability that an order wil
 ```mermaid
 flowchart TD
 
-    A[E-commerce Transaction Data] --> B[Data Cleaning & EDA]
+    A["E-commerce Transaction Data"] --> B["Data Cleaning and Validation"]
 
-    B --> C[Feature Engineering]
+    B --> C["Exploratory Data Analysis"]
 
-    C --> C1[Discounted Price]
-    C --> C2[High Discount Indicator]
-    C --> C3[Frequent Returner Indicator]
-    C --> C4[Delayed Delivery Indicator]
+    C --> D["Feature Engineering"]
 
-    C --> D[Data Preprocessing]
+    D --> D1["Discounted Price"]
+    D --> D2["High Discount Indicator"]
+    D --> D3["Frequent Returner Indicator"]
+    D --> D4["Delayed Delivery Indicator"]
 
-    D --> D1[Numerical Features]
-    D --> D2[Categorical Features]
-
-    D1 --> D3[Imputation + Standard Scaling]
-    D2 --> D4[Imputation + One-Hot Encoding]
-
-    D3 --> E[Model Training]
+    D1 --> E["Data Preprocessing"]
+    D2 --> E
+    D3 --> E
     D4 --> E
 
-    E --> E1[Logistic Regression]
-    E --> E2[Random Forest]
+    E --> E1["Numerical Features"]
+    E --> E2["Categorical Features"]
 
-    E1 --> F[Model Evaluation]
-    E2 --> F
+    E1 --> E3["Median Imputation and Standard Scaling"]
+    E2 --> E4["Most Frequent Imputation and One Hot Encoding"]
 
-    F --> F1[Precision]
-    F --> F2[Recall]
-    F --> F3[F1 Score]
-    F --> F4[Business Cost Analysis]
+    E3 --> F["Random Forest Classifier"]
+    E4 --> F
 
-    F --> G[Risk Prediction]
+    F --> G["Return Risk Probability"]
 
-    G --> H[Return Risk Probability]
-    H --> I[Risk Score]
+    G --> H["Risk Assessment Engine"]
 
-    I --> J{Risk Level}
+    H --> H1["LOW"]
+    H --> H2["MEDIUM"]
+    H --> H3["HIGH"]
 
-    J --> J1[LOW]
-    J --> J2[MEDIUM]
-    J --> J3[HIGH]
+    H1 --> I1["Allow Normally"]
+    H2 --> I2["Additional Verification"]
+    H3 --> I3["Manual Review"]
 
-    J1 --> K1[Allow Normally]
-    J2 --> K2[Additional Verification]
-    J3 --> K3[Manual Review]
+    G --> J["Streamlit Risk Dashboard"]
 
-    G --> L[Explainable Risk Factors]
+    J --> K["Risk Score"]
+    J --> L["Risk Factors"]
+    J --> M["Recommended Action"]
 
-    K1 --> M[Streamlit Dashboard]
-    K2 --> M
-    K3 --> M
-    L --> M
+    
 Features
 E-commerce return risk prediction
 Machine learning based probability score
